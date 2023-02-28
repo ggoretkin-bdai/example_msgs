@@ -62,5 +62,3 @@ build-colcon:
     # The flags are to show all output immediately on the console, and be verbose
     # `source` in bash is a synonym for `.`  in POSIX shell, which this is by default
     RUN . /opt/ros/eloquent/setup.sh && colcon --log-level info build --event-handlers console_direct+
-
-    RUN false
