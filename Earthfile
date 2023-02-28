@@ -27,12 +27,16 @@ install-buildtools-and-sourcecode:
     # This is only necessary for building with `colcon`, but not for packaging with .deb
     RUN apt-get -y install python3-colcon-common-extensions
 
-
     WORKDIR /workdir/pkg_in_question
+
     # copy this ROS package over
+    # first only the necessary files to allow `rosdep` to install dependencies (better caching in Earthly)
+    COPY --dir ./package.xml ./
+    RUN rosdep install --rosdistro eloquent --from-paths .
+
+    # copy the rest of the ROS package
     COPY --dir ./msg ./
     COPY --dir ./CMakeLists.txt ./
-    COPY --dir ./package.xml ./
 
 
 build-bloom-container-native:
@@ -48,6 +52,7 @@ build-bloom-container-native:
     RUN mkdir -p artifacts
     RUN mv *.deb artifacts/
     SAVE ARTIFACT artifacts/* AS LOCAL build/
+
 
 build-colcon:
     FROM +install-buildtools-and-sourcecode

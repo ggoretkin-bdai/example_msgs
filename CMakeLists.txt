@@ -7,18 +7,16 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-# find_package(builtin_interfaces REQUIRED)
-# find_package(common_interfaces REQUIRED)
-# find_package(std_msgs REQUIRED)
-# find_package(geometry_msgs REQUIRED)
-# find_package(sensor_msgs REQUIRED)
+find_package(builtin_interfaces REQUIRED)
+find_package(common_interfaces REQUIRED)
 
 find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/FooMessage.msg"
-  # DEPENDENCIES builtin_interfaces 
-  # common_interfaces
+  DEPENDENCIES
+  builtin_interfaces
+  common_interfaces
 )
 
 ament_export_dependencies(rosidl_default_runtime)
